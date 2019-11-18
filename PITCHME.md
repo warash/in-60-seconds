@@ -1,77 +1,55 @@
 # Angular 2 performance pitfalls
 
 ---
-
-### OnPush
-
-![IMAGE](assets/img/presentation.png)
-
----?color=linear-gradient(180deg, white 75%, black 25%)
-@title[Customize Slide Layout]
-
+#### ChangeDetectionStrategy OnPush
 @snap[west span-50]
-## Change detection mechanism
+Change detection mechanism
 @snapend
-
 @snap[east span-50]
 ![IMAGE](assets/onpush-cd.gif)
 @snapend
-
-@snap[south span-100 text-white]
-Snap Layouts let you create custom slide designs directly within your markdown.
-@snapend
-
----?color=linear-gradient(90deg, #5384AD 65%, white 35%)
-@title[Add A Little Imagination]
-
-@snap[north-west h4-white]
-#### And start presenting...
-@snapend
-
-@snap[west span-55]
-@ul[list-spaced-bullets text-white text-09]
-- You will be amazed
-- What you can achieve
-- *With a little imagination...*
-- And **GitPitch Markdown**
+---
+#### OnPush - problems with third party libs 
+@ul[list-spaced-bullets]
+- its risky to use OnPush on close to top level with deep children tree
+- you must to return to Angular Zone when using library from outside angular ecosystem
 @ulend
-@snapend
+---
+#### OnPush - problems subscription to shared state
 
-@snap[east span-45]
-@img[shadow](assets/img/conference.png)
-@snapend
-
+@ul[list-spaced-bullets]
+- use | async pipes
+- use changeDetectionRef.markForCheck
+@ulend
 ---
 
-@snap[north-east span-100 text-pink text-06]
-Let your code do the talking!
-@snapend
+#### NgZone - Move frequent event that are not changing angular state outside ngZone
+@ul[list-spaced-bullets]
+- do not listen to scroll, mouse and other haevy events inside angular unless its necessary
+- do not attach listeneres to global evenets like domcument.click or xhr.onReadyStateChange
+@ulend
+---
 
-```sql zoom-18
-CREATE TABLE "topic" (
-    "id" serial NOT NULL PRIMARY KEY,
-    "forum_id" integer NOT NULL,
-    "subject" varchar(255) NOT NULL
-);
-ALTER TABLE "topic"
-ADD CONSTRAINT forum_id
-FOREIGN KEY ("forum_id")
-REFERENCES "forum" ("id");
-```
-
-@snap[south span-100 text-gray text-08]
-@[1-5](You can step-and-ZOOM into fenced-code blocks, source files, and Github GIST.)
-@[6,7, zoom-13](Using GitPitch live code presenting with optional annotations.)
-@[8-9, zoom-12](This means no more switching between your slide deck and IDE on stage.)
-@snapend
+#### TrackBy *NgFor
+use it whenever you are using immutables. NgFor compares list items by reference. If refernce changes it recreates entire item from scratch.
+---
 
 
----?image=assets/img/presenter.jpg
+#### use ShareReplay(1) and DistinctUntilChanged with observables
+@ul[list-spaced-bullets]
+- always use shareReplay(1) on streams you wanna make public and use with async inside your view
+- to prevent view model computation if no needed select from golbal state only dependant properties and add distinctUntiChanged(isEqual)
+@ulend
+---
 
-@snap[north span-100 h2-white]
-## Now It's Your Turn
-@snapend
 
-@snap[south span-100 text-06]
-[Click here to jump straight into the interactive feature guides in the GitPitch Docs @fa[external-link]](https://gitpitch.com/docs/getting-started/tutorial/)
-@snapend
+#### avoid binding to methods or getters
+@ul[list-spaced-bullets]
+- caclulate your viewmodel only when necessary 
+- use memoize from lodash
+- recalc model when dependand inputs changed inside ngOnChanges method
+- using methods or getters for binding causes recalculation every changedetection cycle
+- methods or getters returns always new instance which causes children with onPush to rerender 
+@ulend
+---
+
