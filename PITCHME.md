@@ -1,7 +1,7 @@
-# Angular 2 performance pitfalls
+### Angular 2 performance pitfalls
 
 ---
-#### ChangeDetectionStrategy OnPush
+@title[ChangeDetectionStrategy OnPush]
 @snap[west span-50]
 Change detection mechanism
 @snapend
@@ -53,3 +53,5 @@ use it whenever you are using immutables. NgFor compares list items by reference
 @ulend
 ---
 
+https://danielwiehl.github.io/edu-angular-change-detection
+@fa[external-link]](https://danielwiehl.github.io/edu-angular-change-detection/)
