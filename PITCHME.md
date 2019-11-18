@@ -10,11 +10,11 @@
 @title[Customize Slide Layout]
 
 @snap[west span-50]
-## Customize the Layout
+## Change detection mechanism
 @snapend
 
 @snap[east span-50]
-![IMAGE](assets/img/presentation.png)
+![IMAGE](assets/onpush-cd.gif)
 @snapend
 
 @snap[south span-100 text-white]
