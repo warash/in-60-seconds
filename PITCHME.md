@@ -1,7 +1,9 @@
 ### Angular 2 performance pitfalls
 
 ---
-@title[ChangeDetectionStrategy OnPush]
+@snap[west span-100]
+ChangeDetectionStrategy OnPush - change detection mechanism
+@snapend
 @snap[west span-50]
 Change detection mechanism
 @snapend
@@ -11,11 +13,11 @@ Change detection mechanism
 ---
 #### OnPush - problems with third party libs 
 @ul[list-spaced-bullets]
-- its risky to use OnPush on close to top level with deep children tree
-- you must to return to Angular Zone when using library from outside angular ecosystem
+- its risky to use OnPush on Component with many childrens
+- you must to get back to Angular Zone when using libraries from outside angular ecosystem
 @ulend
 ---
-#### OnPush - problems subscription to shared state
+#### OnPush - problem with subscription to shared state
 
 @ul[list-spaced-bullets]
 - use | async pipes
@@ -23,10 +25,11 @@ Change detection mechanism
 @ulend
 ---
 
-#### NgZone - Move frequent event that are not changing angular state outside ngZone
+#### NgZone - Move frequent events, that are not changing angular state outside ngZone
 @ul[list-spaced-bullets]
 - do not listen to scroll, mouse and other haevy events inside angular unless its necessary
 - do not attach listeneres to global evenets like domcument.click or xhr.onReadyStateChange
+- some third party libraries like analytics SDKs, hotjar, jquer plugis can hurt your performance
 @ulend
 ---
 
@@ -35,10 +38,10 @@ use it whenever you are using immutables. NgFor compares list items by reference
 ---
 
 
-#### use ShareReplay(1) and DistinctUntilChanged with observables
+#### use ShareReplay(1) and DistinctUntilChanged() with observables
 @ul[list-spaced-bullets]
-- always use shareReplay(1) on streams you wanna make public and use with async inside your view
-- to prevent view model computation if no needed select from golbal state only dependant properties and add distinctUntiChanged(isEqual)
+- always use shareReplay(1) on streams you wanna make public and expect to have many subscribers
+- to prevent view model computation when unecessary select from golbal state only dependant properties and add distinctUntiChanged(isEqual)
 @ulend
 ---
 
@@ -52,6 +55,8 @@ use it whenever you are using immutables. NgFor compares list items by reference
 - methods or getters returns always new instance which causes children with onPush to rerender 
 @ulend
 ---
+
+#### play with this cool change detection demo
 
 https://danielwiehl.github.io/edu-angular-change-detection
 @fa[external-link]](https://danielwiehl.github.io/edu-angular-change-detection/)
