@@ -1,15 +1,13 @@
 ### Angular 2 performance pitfalls
 
 ---
-@snap[west span-100]
-ChangeDetectionStrategy OnPush - change detection mechanism
-@snapend
-@snap[west span-50]
+
+#### ChangeDetectionStrategy OnPush - change detection mechanism
+
 Change detection mechanism
-@snapend
-@snap[east span-50]
+
 ![IMAGE](assets/onpush-cd.gif)
-@snapend
+
 ---
 #### OnPush - problems with third party libs 
 @ul[list-spaced-bullets]
@@ -58,5 +56,4 @@ use it whenever you are using immutables. NgFor compares list items by reference
 
 #### play with this cool change detection demo
 
-https://danielwiehl.github.io/edu-angular-change-detection
-@fa[external-link]](https://danielwiehl.github.io/edu-angular-change-detection/)
+@fa[external-link](https://danielwiehl.github.io/edu-angular-change-detection/)
