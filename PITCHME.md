@@ -1,8 +1,8 @@
-# Let's Get Started
+# Angular 2 performance pitfalls
 
 ---
 
-## Add Some Slide Candy
+### OnPush
 
 ![IMAGE](assets/img/presentation.png)
 
